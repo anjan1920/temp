@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./output.css" />
+  <title>Shopping Cart</title>
+  <script src="./script.js"></script>
+</head>
+<body class="bg-gray-900">
+  <div id="section" class="h-dvh flex justify-center items-center">
+    <div
+      id="card"
+      class="bg-gray-700 min-h-80 w-96 rounded-md shadow-xl shadow-blue-900 text-white p-6 space-y-6"
+    >
+      <!-- Products Section -->
+       <h2 class="font-bold text-2xl">Products</h2>
+      <div id="products" class="flex flex-col space-y-2 h-60 overflow-y-auto">
+
+        
+        <!-- will be injected by js -->
+        <!-- <div id="items" class="flex justify-between items-center bg-gray-600 px-4 py-2 rounded">
+          <h3>Name</h3>
+          <h4>$12</h4>
+          <button id = "add-item-btn" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded">Add</button>
+        </div> -->
+        <!-- Add more items as needed -->
+      </div>
+
+      <!-- Cart Section -->
+       <h3 class="text-xl font-semibold">Shopping Cart</h3>
+        
+      <div id="cart" class="bg-gray-600 p-4 rounded space-y-3  max-h-40 overflow-y-auto ">
+        <!-- inject when cart is empty -->
+        <p id="empty-card" class="text-sm text-gray-300"></p>
+        <!-- else inject this -->
+        <!-- <div id="cart-item" class="flex justify-between items-center bg-gray-500 px-3 py-2 rounded">
+          <h3>Product 1</h3>
+          <h4>$12</h4>
+        </div> -->
+        
+      </div>
+      <span class="text-base font-bold">Total:</span>
+        <Span id="total-price" class="italic"></Span>
+        <button
+        id="check-outBtn"
+          type="submit"
+          class="w-full bg-green-600 hover:bg-green-700 py-2 rounded font-semibold"
+        >
+          Check Out
+        </button>
+    </div>
+  </div>
+</body>
+</html>
