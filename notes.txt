@@ -1,0 +1,116 @@
+//use excalidraw for drawing the project life cycle or any diagram
+https://excalidraw.com/
+
+# IQR METHOD – Outlier Detection
+Q1, Q2, and Q3 are the 1st, 2nd, and 3rd quartiles respectively:
+
+- Q1 (25th percentile): 25% of the data lies below this value.
+- Q2 (50th percentile or median): 50% of the data lies below this value.
+- Q3 (75th percentile): 75% of the data lies below this value.
+Example:
+If Q1 = 45, it means 25% of the dataset has values less than 45.
+If Q3 = 12, it means 75% of the dataset has values less than 12.
+
+IQR (Interquartile Range) is calculated as: IQR = Q3 - Q1
+
+Using IQR, we define the boundaries for detecting outliers:
+Lower Bound  = Q1 - 1.5 × IQR  
+Upper Bound  = Q3 + 1.5 × IQR
+
+Any data point outside this range is considered an outlier:
+If value < Lower Bound → Outlier  
+If value > Upper Bound → Outlier
+
+
+# Using df.iterrows() 
+
+df.iterrows() returns (index, row) for each row in the DataFrame:
+- index : row index in the df(data frme)
+- row: a Pandas Series (not the actual DataFrame row)
+df.at[idx, 'col1'] = 0
+df.at ->targets the cell where row index = idx  and column is 'col1'
+
+
+
+Perfect! Here's the full **rewritten VIF explanation**, with everything — including **R²** and the **"regress it using other columns"** part — clearly included.
+
+---
+
+## VIF (Variance Inflation Factor)
+
+###  What It Tells:
+
+* VIF tells you **how much a feature is linearly predictable** from other features.
+* It helps detect **multicollinearity** — when two or more input features are too similar.
+* High VIF = This feature doesn't add unique value (redundant).
+
+###  How VIF Works:
+
+#### Step-by-step:
+
+1. **Pick one column** (say `X1`).
+2. **Regress it using all the other columns as inputs.**
+
+   * Example:
+
+     $$
+     X1 = beta_0 + beta_2*X2 + beta_3*X3 + epsilon
+   * This is not your main model. You're just checking:
+     **Can X2 and X3 predict X1? by finding the betas and epsilon values**
+3. After this regression, get the **R² value**:
+
+   * R² tells: “How much of X1's variance is explained by the other features?”
+4. Now use the formula:
+
+   VIF{X1} = 1/{1 - R²}
+   
+
+---
+
+### 🎯 How to Interpret R² and VIF:
+
+| R²   | Meaning (Predictability of Feature) | VIF | Interpretation                  |
+| ---- | ----------------------------------- | --- | ------------------------------- |
+| 0.0  | Other features explain nothing      | 1   | No multicollinearity            |
+| 0.5  | 50% variance explained              | 2   | Acceptable                      |
+| 0.8  | 80% variance explained              | 5   | Warning zone                    |
+| 0.9  | 90% variance explained              | 10  | High multicollinearity → Fix it |
+| 0.95 | 95% variance explained              | 20  | Very strong multicollinearity   |
+
+---
+
+###  Repeat for Each Column
+
+To get full VIF values:
+
+* Regress each column against all others.
+* Get R² for each regression.
+* Plug into the formula.
+
+| Feature | Regress On | Get R² | Compute VIF          |
+| ------- | ---------- | ------ | -------------------- |
+| X1      | X2, X3     | R1²    | VIF₁ = 1 / (1 - R1²) |
+| X2      | X1, X3     | R2²    | VIF₂ = 1 / (1 - R2²) |
+| X3      | X1, X2     | R3²    | VIF₃ = 1 / (1 - R3²) |
+
+---
+
+### When to Take Action
+
+| VIF Range | Action                      |
+| --------- | --------------------------- |
+| 1 – 5     | OK                          |
+| 5 – 10    | Check for multicollinearity |
+| >10       | Serious → Remove/Fix        |
+
+---
+
+###Why It Matters
+
+* Multicollinearity **doesn't always break prediction**, but:
+
+  * It makes your model coefficients **unstable**.
+  * Makes it **hard to interpret which feature is important**.
+  * Increases **variance** of the estimated coefficients.
+
+-
